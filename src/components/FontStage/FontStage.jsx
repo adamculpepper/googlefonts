@@ -22,6 +22,7 @@ import {
 } from '../../lib/pinnedCodec.js'
 import { STORAGE_KEYS, readStoredString } from '../../lib/storage.js'
 import FontGrid from '../FontGrid/FontGrid.jsx'
+import FilterBar from '../FilterBar/FilterBar.jsx'
 import ResultsBar from '../ResultsBar/ResultsBar.jsx'
 import Pagination from '../Pagination/Pagination.jsx'
 import DetailPanel from '../DetailPanel/DetailPanel.jsx'
@@ -207,6 +208,7 @@ export default function FontStage({ records, probe }) {
         {/* Sticky so the count and the active filters stay in sight while
             the grid scrolls beneath them. */}
         <div className="font-stage__sticky">
+          <FilterBar />
           <ResultsBar
             shownStart={shownStart}
             shownEnd={shownEnd}

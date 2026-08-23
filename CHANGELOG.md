@@ -2,6 +2,11 @@
 
 The number here, in `package.json`, and in `src/data/version.js` are the same number, and the bump lands in the same change as the work. A fix bumps the patch, a feature bumps the minor. Nothing enforces this automatically yet, so it is on whoever ships the change.
 
+## [1.5.0] - 2026-08-23
+
+- Fixed the biggest bug in the app so far: the Latin filter, which is on by default, was hiding 388 fonts that carry a full Latin character set, Poppins among them at rank 8. It read the script a family is filed under rather than asking whether the family has Latin at all, so a Latin and Devanagari face like Poppins counted as non-Latin. The default view goes from 1,226 fonts to 1,614, and searching Poppins now finds Poppins.
+- Name search, category, and sort moved out of the sidebar and into a bar above the grid. Looking for a typeface is the point of the app, so it no longer starts with opening a panel. Each control still has exactly one home; the sidebar keeps the deeper filters.
+
 ## [1.4.0] - 2026-08-23
 
 - Favorites and saved lists now live in the header beside share and theme. The button names whichever collection is on screen and carries a count, so what is filtering the grid is readable from anywhere without opening anything.

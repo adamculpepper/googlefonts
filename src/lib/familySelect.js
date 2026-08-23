@@ -57,17 +57,14 @@ function isVariable(record) {
   return hasFlag(record, FLAGS.VARIABLE) || (Array.isArray(record?.axes) && record.axes.length > 0)
 }
 
-// Lenient on purpose. A recorded primary script is trusted when it is there;
-// when it is missing, an empty script is not evidence that a family is written
-// in something other than Latin, so the Latin flag decides instead. Being
-// wrong in the other direction would hide a usable font behind a filter that
-// is ON by default, which is this app's worst failure mode.
+// Having Latin is the question, not being PRIMARILY Latin. Google records a
+// primary script of Deva for Poppins, Arab for Cairo, Thai for Kanit; all three
+// carry a full Latin set and all three are ordinary picks for a Latin wordmark.
+// Reading primaryScript here hid 388 usable families behind a filter that is ON
+// by default, Poppins among them at rank 8. The flag also matches what this
+// filter has always claimed to do: 121 families have no Latin at all, which is
+// the "about 120" its help text promises.
 function isLatinFamily(record) {
-  const script = typeof record?.primaryScript === 'string' ? record.primaryScript.trim().toLowerCase() : ''
-  // Google's metadata has carried both the word and the ISO 15924 code;
-  // accepting either keeps a Latin-primary family from being hidden by a
-  // filter that is ON by default just because the upstream spelling moved.
-  if (script.length > 0) return script === 'latin' || script === 'latn'
   return hasFlag(record, FLAGS.HAS_LATIN)
 }
 

@@ -15,6 +15,10 @@
 //          because keeping page 7 of a result set that no longer exists is
 //          incoherent.
 // showIf — removed from the sidebar entirely while the predicate is false.
+// surface — 'bar' moves a control out of the sidebar and into the filter bar
+//           above the grid. Finding a font starts with name, category and
+//           sort, so those three sit in the open rather than three clicks
+//           deep. Each control still has exactly one home.
 //
 // Three filters default ON (hideNoto, latinOnly, supportsText). The results bar
 // MUST surface each as a removable chip; a default that silently hides hundreds
@@ -116,11 +120,11 @@ export const PARAM_REGISTRY = [
   // ---- Filters ----
   {
     key: 'q', group: 'Filters', type: 'text', label: 'Search by name',
-    default: '', maxLength: 40, placeholder: 'Poppins, Lato...', filter: true,
+    default: '', maxLength: 40, placeholder: 'Poppins, Lato...', filter: true, surface: 'bar',
   },
   {
     key: 'category', group: 'Filters', type: 'checks', label: 'Category',
-    default: [], filter: true,
+    default: [], filter: true, surface: 'bar',
     options: [
       { value: 'Sans Serif', label: 'Sans serif' },
       { value: 'Serif', label: 'Serif' },
@@ -149,7 +153,7 @@ export const PARAM_REGISTRY = [
   {
     key: 'latinOnly', group: 'Language', type: 'toggle', label: 'Latin-script fonts only',
     default: true, filter: true,
-    help: 'Hides families designed mainly for another writing system, about 120 of them.',
+    help: 'Hides the 121 families that carry no Latin characters at all. A font built for another script still shows when it also ships Latin, which most do.',
   },
   {
     key: 'supportsText', group: 'Language', type: 'toggle', label: 'Must support my text',
@@ -160,7 +164,7 @@ export const PARAM_REGISTRY = [
   // ---- Sort ----
   {
     key: 'sort', group: 'Sort', type: 'select', label: 'Sort by',
-    default: 'popularity', filter: true,
+    default: 'popularity', filter: true, surface: 'bar',
     options: [
       { value: 'popularity', label: 'Most popular' },
       { value: 'trending', label: 'Trending' },

@@ -579,14 +579,20 @@ check('hideNoto drops the Noto flag', !slugsOf(filterBy({ hideNoto: true })).inc
 check('variableOnly keeps the variable family', slugsOf(filterBy({ variableOnly: true })) === 'inter')
 check('hasItalic keeps only families with an italic', slugsOf(filterBy({ hasItalic: true })) === 'roboto,molle,raleway,amiri', slugsOf(filterBy({ hasItalic: true })))
 check(
-  'latinOnly keeps a recorded latin script and a flagged empty one',
-  slugsOf(filterBy({ latinOnly: true })) === 'roboto,inter,anton,molle,raleway,creme-brulee',
+  'latinOnly keeps every family carrying Latin, whatever script it is filed under',
+  slugsOf(filterBy({ latinOnly: true })) === 'roboto,inter,anton,molle,noto-sans-jp,raleway,creme-brulee',
   slugsOf(filterBy({ latinOnly: true })),
 )
+// The filter asks whether a family HAS Latin, not whether Latin is the script
+// it was filed under. Google files Poppins under Deva and Cairo under Arab;
+// both carry a full Latin set and both are ordinary picks for a Latin wordmark.
+// Reading the recorded script here hid 388 usable families, Poppins at rank 8
+// among them. A family that is filed elsewhere but ships Latin stays.
 check(
-  'a recorded non-latin script loses to the filter even with the latin flag set',
-  !slugsOf(filterBy({ latinOnly: true })).includes('noto-sans-jp'),
+  'a family filed under another script still passes when it carries Latin',
+  slugsOf(filterBy({ latinOnly: true })).includes('noto-sans-jp'),
 )
+// Hiding it is hideNoto's job, and that check sits a few lines above.
 check('latinOnly drops a family with neither a script nor the flag', !slugsOf(filterBy({ latinOnly: true })).includes('amiri'))
 check('listSlugs narrows to the listed slugs', slugsOf(filterBy({ listSlugs: new Set(['anton', 'inter']) })) === 'inter,anton')
 check('an empty listSlugs set hides everything', filterBy({ listSlugs: new Set() }).length === 0)

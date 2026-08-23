@@ -1,0 +1,147 @@
+/* Top row of the sticky stack: the controls that steer the search. The results
+   bar below reports on what they did. */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.filter-bar__search {
+  position: relative;
+  flex-shrink: 0;
+  width: 220px;
+}
+
+.filter-bar__search-icon {
+  position: absolute;
+  top: 50%;
+  left: var(--space-2);
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  pointer-events: none;
+}
+
+/* Scoped through the wrapper on purpose: global.css styles inputs by
+   attribute (input[type='text']), which outranks a lone class and was
+   flattening this padding back to 6px, dropping the text under the icon. */
+.filter-bar__search .filter-bar__search-input {
+  width: 100%;
+  height: 30px;
+  padding: 0 var(--space-6) 0 var(--space-6);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+
+  &::placeholder {
+    color: var(--text-disabled);
+  }
+
+  &:hover {
+    border-color: var(--border-default);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -1px;
+  }
+}
+
+.filter-bar__search-clear {
+  position: absolute;
+  top: 50%;
+  right: var(--space-1);
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--text-primary);
+    background: var(--bg-hover);
+  }
+}
+
+/* Categories scroll sideways rather than wrapping: a second row would push the
+   grid down and undo the point of putting them here. */
+.filter-bar__categories {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.filter-bar__pill {
+  flex-shrink: 0;
+  height: 28px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast);
+
+  &:hover {
+    color: var(--text-primary);
+    border-color: var(--border-default);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  &.is-active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+}
+
+.filter-bar__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+
+  & select {
+    width: auto;
+    height: 30px;
+    padding: 0 var(--space-6) 0 var(--space-2);
+    font-size: var(--font-size-sm);
+  }
+}
+
+.filter-bar__sort-label {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+}
+
+@media (max-width: 991.98px) {
+  .filter-bar__search {
+    width: 150px;
+  }
+
+  .filter-bar__sort-label {
+    display: none;
+  }
+}

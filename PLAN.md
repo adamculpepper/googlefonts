@@ -160,7 +160,7 @@ Perf budget (verify-perf.mjs, Playwright + CDP, house PASS/FAIL style): boot→f
 
 ## Appendix: original prompt (verbatim)
 
-> W're going to make a new project. It'll be a website that has all the google fonts on the page (paginated by default, but allowing an option to show them all).
+> We're going to make a new project. It'll be a website that has all the google fonts on the page (paginated by default, but allowing an option to show them all).
 >
 > This tool will mostly be used to allow people to see all the Google Fonts at the same time and scroll down the page until they find the right one for their text. Imagine someone looking to build a new logo for "Company Name" so they'd put that text, all the blocks would update the text to that and each Google Font would run down the page
 >
