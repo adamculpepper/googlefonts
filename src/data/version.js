@@ -2,4 +2,4 @@
 // Nothing checks this automatically yet, so a release that bumps one of the
 // three has to bump all three in the same change.
 export const APP_NAME = 'Google Fonts Browser'
-export const VERSION = '1.2.0'
+export const VERSION = '1.3.0'

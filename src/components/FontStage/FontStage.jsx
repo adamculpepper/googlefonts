@@ -22,6 +22,7 @@ import {
 } from '../../lib/pinnedCodec.js'
 import { STORAGE_KEYS, readStoredString } from '../../lib/storage.js'
 import FontGrid from '../FontGrid/FontGrid.jsx'
+import CollectionsBar from '../CollectionsBar/CollectionsBar.jsx'
 import ResultsBar from '../ResultsBar/ResultsBar.jsx'
 import Pagination from '../Pagination/Pagination.jsx'
 import DetailPanel from '../DetailPanel/DetailPanel.jsx'
@@ -43,7 +44,7 @@ const CSS_FALLBACK_BY_CATEGORY = {
 const WEIGHT_FOR_MODE = { thickest: 900, lightest: 100 }
 
 export default function FontStage({ records, probe }) {
-  const { settings } = useAppState()
+  const { settings, listFilter } = useAppState()
   const { setParam, setParamQuiet } = useAppActions()
   // useToast returns the show function itself, not an object.
   const showToast = useToast()
@@ -161,6 +162,21 @@ export default function FontStage({ records, probe }) {
     settings.italic,
   ])
 
+  // An empty collection is not a failed search, so it gets copy that says how
+  // to fill it rather than telling the reader to remove filters they never set.
+  const emptyCollection =
+    listFilter && listFilter.slugs.size === 0
+      ? listFilter.kind === 'favorites'
+        ? {
+            title: 'No favorites yet',
+            hint: 'Click the star on any font to keep it here. Favorites live in this browser only.',
+          }
+        : {
+            title: 'This list is empty',
+            hint: 'Use the list button on any font to add it here.',
+          }
+      : null
+
   const visibleRecords = view.showAll ? view.sorted : view.pageRecords
   const shownStart =
     view.filtered.length === 0
@@ -189,18 +205,32 @@ export default function FontStage({ records, probe }) {
         className={pins.length > 0 ? 'font-stage has-compare-tray' : 'font-stage'}
         ref={scrollRef}
       >
-        <ResultsBar
-          shownStart={shownStart}
-          shownEnd={shownEnd}
-          filteredCount={view.filtered.length}
-          effectiveText={view.effectiveText}
-        />
+        {/* One sticky stack: collections steer the view, the results bar
+            reports on it. Both stay in sight while the grid scrolls. */}
+        <div className="font-stage__sticky">
+          <CollectionsBar />
+          <ResultsBar
+            shownStart={shownStart}
+            shownEnd={shownEnd}
+            filteredCount={view.filtered.length}
+            effectiveText={view.effectiveText}
+          />
+        </div>
         {view.filtered.length === 0 ? (
           <div className="font-stage__empty">
-            <p className="font-stage__empty-title">No fonts match</p>
-            <p className="font-stage__empty-hint">
-              Try removing a filter chip above, or reset everything from the sidebar.
-            </p>
+            {emptyCollection ? (
+              <>
+                <p className="font-stage__empty-title">{emptyCollection.title}</p>
+                <p className="font-stage__empty-hint">{emptyCollection.hint}</p>
+              </>
+            ) : (
+              <>
+                <p className="font-stage__empty-title">No fonts match</p>
+                <p className="font-stage__empty-hint">
+                  Try removing a filter chip above, or reset everything from the sidebar.
+                </p>
+              </>
+            )}
           </div>
         ) : (
           <CardActionsProvider actions={cardActions}>

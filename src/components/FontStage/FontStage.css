@@ -11,6 +11,13 @@
   padding-bottom: var(--space-8);
 }
 
+/* Collections bar and results bar travel together at the top of the stage. */
+.font-stage__sticky {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+}
+
 .font-stage__empty {
   display: flex;
   flex-direction: column;

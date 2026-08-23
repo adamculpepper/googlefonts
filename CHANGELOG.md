@@ -2,6 +2,11 @@
 
 The number here, in `package.json`, and in `src/data/version.js` are the same number, and the bump lands in the same change as the work. A fix bumps the patch, a feature bumps the minor. Nothing enforces this automatically yet, so it is on whoever ships the change.
 
+## [1.3.0] - 2026-08-23
+
+- Favorites and saved lists moved out of a dropdown in the sidebar and onto a row above the grid. Every collection is one click away with its count in view, the active one is obvious, and starring a font updates the count as you go.
+- An empty favorites view now says how to fill it rather than suggesting you remove a filter you never set.
+
 ## [1.2.0] - 2026-08-23
 
 - A version number in the header, next to the app name, small and muted. The deploy pipeline stamps each release with its own build number, so the site reads v1.2.0.n and the n climbs on every deploy with no file to edit.

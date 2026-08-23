@@ -2,12 +2,9 @@
 // order, every visible param through the Control dispatcher. Adding a knob to
 // params.js is the whole job; nothing here is per-control.
 
-import { useState } from 'react'
 import { GROUPS, PARAM_REGISTRY } from '../../data/params.js'
 import { useAppActions, useAppState } from '../../context/AppContext.jsx'
 import Control from '../controls/Control.jsx'
-import ListFilterControl from '../ListFilterControl/ListFilterControl.jsx'
-import ListsDialog from '../ListsDialog/ListsDialog.jsx'
 import ControlSection, { useSectionOpenState } from '../ControlSection/ControlSection.jsx'
 import Presets from '../Presets/Presets.jsx'
 import './Sidebar.css'
@@ -23,7 +20,6 @@ export default function Sidebar({ categoryCounts }) {
   const { settings } = useAppState()
   const { updateParam, commit, setParam } = useAppActions()
   const { openState, toggleSection } = useSectionOpenState(GROUPS, OPEN_BY_DEFAULT)
-  const [listsOpen, setListsOpen] = useState(false)
 
   return (
     <aside className="sidebar" aria-label="Font controls and filters">
@@ -59,7 +55,6 @@ export default function Sidebar({ categoryCounts }) {
                   />
                 </div>
               ))}
-              {group === 'Filters' && <ListFilterControl onManage={() => setListsOpen(true)} />}
             </ControlSection>
           )
         })}
@@ -74,7 +69,6 @@ export default function Sidebar({ categoryCounts }) {
           </a>
         </span>
       </div>
-      {listsOpen && <ListsDialog onClose={() => setListsOpen(false)} />}
     </aside>
   )
 }

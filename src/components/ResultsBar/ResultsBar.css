@@ -1,9 +1,7 @@
-/* Sticky directly under the header so the count and the active filters are
-   never scrolled away: what is narrowing the grid stays visible with it. */
+/* The stage's sticky stack owns the position now (collections bar above,
+   this below), so the count and the active filters are still never scrolled
+   away: what is narrowing the grid stays visible with it. */
 .results-bar {
-  position: sticky;
-  top: 0;
-  z-index: var(--z-sticky);
   display: flex;
   align-items: center;
   flex-wrap: wrap;
