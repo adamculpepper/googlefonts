@@ -4,6 +4,7 @@
 
 import { GROUPS, PARAM_REGISTRY } from '../../data/params.js'
 import { useAppActions, useAppState } from '../../context/AppContext.jsx'
+import Icon from '../Icon.jsx'
 import Control from '../controls/Control.jsx'
 import ControlSection, { useSectionOpenState } from '../ControlSection/ControlSection.jsx'
 import Presets from '../Presets/Presets.jsx'
@@ -17,8 +18,8 @@ const OPEN_BY_DEFAULT = ['Preview', 'Weight', 'Filters']
 const FILTER_DIVIDER_BEFORE = 'minWeight'
 
 export default function Sidebar({ categoryCounts }) {
-  const { settings } = useAppState()
-  const { updateParam, commit, setParam } = useAppActions()
+  const { settings, canUndo, canRedo } = useAppState()
+  const { updateParam, commit, setParam, undo, redo, reset } = useAppActions()
   const { openState, toggleSection } = useSectionOpenState(GROUPS, OPEN_BY_DEFAULT)
 
   return (
@@ -60,6 +61,30 @@ export default function Sidebar({ categoryCounts }) {
           )
         })}
       </div>
+      {/* Only rendered at drawer widths, where the header has no room for
+          these and the sidebar is where every control lives anyway. */}
+      <div className="sidebar__history">
+        <button
+          type="button"
+          className="sidebar__history-button"
+          onClick={undo}
+          disabled={!canUndo}
+        >
+          <Icon name="undo" size={13} /> Undo
+        </button>
+        <button
+          type="button"
+          className="sidebar__history-button"
+          onClick={redo}
+          disabled={!canRedo}
+        >
+          <Icon name="redo" size={13} /> Redo
+        </button>
+        <button type="button" className="sidebar__history-button" onClick={reset}>
+          <Icon name="reset" size={13} /> Reset all
+        </button>
+      </div>
+
       {/* One child, so the inline space before the link survives the flex box
           that centres it. Same credit strip as the color palette site. */}
       <div className="sidebar__credit">

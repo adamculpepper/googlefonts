@@ -23,8 +23,9 @@ function randomSeed() {
 }
 
 export default function Header({ onToggleSidebar, showSidebarButton }) {
-  const { settings, committed, theme } = useAppState()
-  const { updateParam, commit, setParam, setSettings, toggleTheme } = useAppActions()
+  const { settings, committed, theme, canUndo, canRedo } = useAppState()
+  const { updateParam, commit, setParam, setSettings, toggleTheme, undo, redo, reset } =
+    useAppActions()
   const { copied: shareCopied, flagCopied: markShareCopied } = useCopyFlag()
   const textParam = PARAM_BY_KEY.text
 
@@ -99,9 +100,46 @@ export default function Header({ onToggleSidebar, showSidebarButton }) {
       <div className="header__tools">
         <CollectionsMenu />
         <span className="header__tools-divider" aria-hidden="true" />
+        {/* History sits with the other app-wide actions rather than in the bar
+            that reports on the grid. Labelled on desktop, icons on narrow
+            screens, and Reset all keeps a glyph of its own so it can never be
+            mistaken for Undo. */}
         <button
           type="button"
-          className="header__button"
+          className="header__action"
+          aria-label="Undo"
+          title="Undo"
+          disabled={!canUndo}
+          onClick={undo}
+        >
+          <Icon name="undo" size={13} />
+          <span className="header__action-label">Undo</span>
+        </button>
+        <button
+          type="button"
+          className="header__action"
+          aria-label="Redo"
+          title="Redo"
+          disabled={!canRedo}
+          onClick={redo}
+        >
+          <Icon name="redo" size={13} />
+          <span className="header__action-label">Redo</span>
+        </button>
+        <button
+          type="button"
+          className="header__action"
+          aria-label="Reset all controls and filters"
+          title="Reset all controls and filters"
+          onClick={reset}
+        >
+          <Icon name="reset" size={13} />
+          <span className="header__action-label">Reset all</span>
+        </button>
+        <span className="header__tools-divider" aria-hidden="true" />
+        <button
+          type="button"
+          className="header__button header__shuffle"
           aria-label="Shuffle the order"
           title="Shuffle the order"
           onClick={shuffle}

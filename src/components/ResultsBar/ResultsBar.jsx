@@ -64,8 +64,8 @@ function buildChips(settings, effectiveText) {
 }
 
 export default function ResultsBar({ shownStart, shownEnd, filteredCount, effectiveText }) {
-  const { settings, canUndo, canRedo } = useAppState()
-  const { setParam, setSettings, undo, redo, reset } = useAppActions()
+  const { settings } = useAppState()
+  const { setParam, setSettings } = useAppActions()
   const chips = buildChips(settings, effectiveText)
 
   function removeChip(chip) {
@@ -108,42 +108,6 @@ export default function ResultsBar({ shownStart, shownEnd, filteredCount, effect
           ))}
         </ul>
       )}
-      {/* Labeled on desktop, icon-only below the tablet breakpoint (the CSS
-          hides the label spans); aria-labels carry the name either way. */}
-      <div className="results-bar__actions">
-        <button
-          type="button"
-          className="results-bar__action"
-          aria-label="Undo"
-          title="Undo"
-          disabled={!canUndo}
-          onClick={undo}
-        >
-          <Icon name="undo" size={13} />
-          <span className="results-bar__action-label">Undo</span>
-        </button>
-        <button
-          type="button"
-          className="results-bar__action"
-          aria-label="Redo"
-          title="Redo"
-          disabled={!canRedo}
-          onClick={redo}
-        >
-          <Icon name="redo" size={13} />
-          <span className="results-bar__action-label">Redo</span>
-        </button>
-        <button
-          type="button"
-          className="results-bar__action"
-          aria-label="Reset all controls and filters"
-          title="Reset all controls and filters"
-          onClick={reset}
-        >
-          <Icon name="reset" size={13} />
-          <span className="results-bar__action-label">Reset all</span>
-        </button>
-      </div>
     </div>
   )
 }

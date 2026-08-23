@@ -116,34 +116,6 @@ export default function FilterBar() {
         )}
       </div>
 
-      <div className="filter-bar__categories" role="group" aria-label={categoryParam.label}>
-        <button
-          type="button"
-          className={
-            active.length === 0 ? 'filter-bar__pill is-active' : 'filter-bar__pill'
-          }
-          aria-pressed={active.length === 0}
-          onClick={() => setParam('category', [])}
-        >
-          All
-        </button>
-        {categoryParam.options.map((option) => {
-          const selected = active.includes(option.value)
-          return (
-            <button
-              key={option.value}
-              type="button"
-              className={selected ? 'filter-bar__pill is-active' : 'filter-bar__pill'}
-              aria-pressed={selected}
-              title={option.label}
-              onClick={() => toggleCategory(option.value)}
-            >
-              {CATEGORY_PILL_LABELS[option.value] || option.label}
-            </button>
-          )
-        })}
-      </div>
-
       <div className="filter-bar__menu" ref={menuRef}>
         <button
           type="button"
@@ -179,6 +151,34 @@ export default function FilterBar() {
             </button>
           </div>
         )}
+      </div>
+
+      <div className="filter-bar__categories" role="group" aria-label={categoryParam.label}>
+        <button
+          type="button"
+          className={
+            active.length === 0 ? 'filter-bar__pill is-active' : 'filter-bar__pill'
+          }
+          aria-pressed={active.length === 0}
+          onClick={() => setParam('category', [])}
+        >
+          All
+        </button>
+        {categoryParam.options.map((option) => {
+          const selected = active.includes(option.value)
+          return (
+            <button
+              key={option.value}
+              type="button"
+              className={selected ? 'filter-bar__pill is-active' : 'filter-bar__pill'}
+              aria-pressed={selected}
+              title={option.label}
+              onClick={() => toggleCategory(option.value)}
+            >
+              {CATEGORY_PILL_LABELS[option.value] || option.label}
+            </button>
+          )
+        })}
       </div>
 
       <label className="filter-bar__sort">

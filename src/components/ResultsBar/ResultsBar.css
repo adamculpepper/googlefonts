@@ -37,59 +37,6 @@
   color: var(--text-secondary);
 }
 
-.results-bar__actions {
-  display: flex;
-  gap: var(--space-1);
-  margin-left: auto;
-}
-
-.results-bar__action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-1-5);
-  height: 30px;
-  padding: 0 var(--space-3);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
-  background: var(--bg-elevated);
-  color: var(--text-primary);
-  font-size: var(--font-size-sm);
-  cursor: pointer;
-
-  &:hover:not(:disabled) {
-    background: var(--bg-hover);
-    border-color: var(--border-strong);
-  }
-
-  /* Disabled keeps its surface. Dropping the background made these read as
-     ghosts beside their filled neighbours even though the label contrast was
-     fine, which is what made them look faded rather than merely inactive. */
-  &:disabled {
-    color: var(--text-tertiary);
-    border-color: var(--border-subtle);
-    background: var(--bg-surface);
-    cursor: default;
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 1px;
-  }
-}
-
-/* Icon-only on phones; the aria-label still names the action. */
-@media (max-width: 767.98px) {
-  .results-bar__action {
-    width: 28px;
-    padding: 0;
-  }
-
-  .results-bar__action-label {
-    display: none;
-  }
-}
-
 .results-bar__chip-remove {
   display: inline-flex;
   align-items: center;

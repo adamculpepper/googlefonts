@@ -2,6 +2,12 @@
 
 The number here, in `package.json`, and in `src/data/version.js` are the same number, and the bump lands in the same change as the work. A fix bumps the patch, a feature bumps the minor. Nothing enforces this automatically yet, so it is on whoever ships the change.
 
+## [1.7.0] - 2026-08-23
+
+- The Filters button now sits directly beside the name search, where the eye goes next when a name has not narrowed things enough.
+- Undo, Redo and Reset all moved up to the header with the other app-wide actions, separated from the Saved button and from the icon buttons by their own hairlines. The results bar below is purely a report on the grid now.
+- Narrow screens keep every one of those reachable: below 992px the history buttons move into the controls drawer, and on a phone the preview box takes the width the shuffle button was using.
+
 ## [1.6.0] - 2026-08-23
 
 - The remaining filter switches moved into a dropdown behind a Filters button beside the search box, with a badge counting how many are narrowing the grid right now. Back to defaults resets them in a single undo step.

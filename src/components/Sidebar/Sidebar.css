@@ -70,3 +70,43 @@
     }
   }
 }
+
+/* The header owns history on desktop; this is its drawer-width home. */
+.sidebar__history {
+  display: none;
+}
+
+@media (max-width: 991.98px) {
+  .sidebar__history {
+    display: flex;
+    gap: var(--space-1);
+    padding: var(--space-2);
+    border-top: 1px solid var(--border-subtle);
+  }
+}
+
+.sidebar__history-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  flex: 1;
+  height: 30px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: var(--bg-hover);
+  }
+
+  &:disabled {
+    color: var(--text-tertiary);
+    border-color: var(--border-subtle);
+    background: var(--bg-surface);
+    cursor: default;
+  }
+}
