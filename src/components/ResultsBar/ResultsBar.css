@@ -62,10 +62,13 @@
     border-color: var(--border-strong);
   }
 
+  /* Disabled keeps its surface. Dropping the background made these read as
+     ghosts beside their filled neighbours even though the label contrast was
+     fine, which is what made them look faded rather than merely inactive. */
   &:disabled {
     color: var(--text-tertiary);
     border-color: var(--border-subtle);
-    background: none;
+    background: var(--bg-surface);
     cursor: default;
   }
 
