@@ -205,7 +205,9 @@
 }
 
 /* Hover-revealed at fine pointers, always visible on touch: hiding actions
-   behind hover on a phone means they do not exist. */
+   behind hover on a phone means they do not exist. is-open pins the row while
+   the save-to-list menu is up; the menu portals to body, so the card loses
+   hover and focus-within the moment the pointer moves onto it. */
 .font-card__actions {
   position: absolute;
   top: var(--space-2);
@@ -214,6 +216,10 @@
   gap: var(--space-1);
   opacity: 0;
   transition: opacity var(--transition-fast);
+
+  &.is-open {
+    opacity: 1;
+  }
 }
 
 @media (pointer: coarse) {

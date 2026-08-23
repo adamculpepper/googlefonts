@@ -169,7 +169,7 @@ function FontCard({
           )}
         </div>
       </button>
-      <div className="font-card__actions">
+      <div className={savePickerOpen ? 'font-card__actions is-open' : 'font-card__actions'}>
         <button
           type="button"
           className={pinned ? 'font-card__action is-active' : 'font-card__action'}
