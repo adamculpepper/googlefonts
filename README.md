@@ -169,6 +169,14 @@ Vite 5 and React 18, no TypeScript, plain co-located CSS with custom properties.
 
 The data pipeline carries no dependencies at all. The TrueType parser, the scanline rasterizer, the coverage bitset codec, and the base64 encoder are written out against the Node 22 stdlib, and the same coverage module runs unchanged in the browser. Global `fetch` is the real floor, so Node 18 or newer will run it. CI stays on Node 20 and never runs the pipeline, only the offline verify.
 
+## Limits
+
+- Coverage checks are exact for 489 common codepoints and fall back to subset-level data beyond them. A rare symbol can slip through and render as a missing-glyph box; the card then says which characters are missing.
+- The catalog is a snapshot, not a feed. New Google families appear after `npm run data:refresh` is run and committed, which is a roughly monthly chore.
+- Tested in Chromium-family browsers. Safari has not had a pass yet; the coverage probe may degrade to "unknown" there, which fails open, so fonts are shown rather than hidden on a guess.
+- Ink density is measured at each family's heaviest weight on a Latin sample. Non-Latin families are measured on their own script and marked non-comparable instead of being ranked against Latin faces.
+- The default view hides Noto families and non-Latin-primary families. Both filters show as removable chips, so nothing is hidden silently, but the defaults do assume a Latin-script use case.
+
 ## Attribution
 
 This project is not affiliated with Google. It is an independent browser for a public catalog.
