@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { STORAGE_KEYS, readStoredJson, writeStoredJson } from '../../lib/storage.js'
 import Icon from '../Icon.jsx'
 import './ControlSection.css'
@@ -10,9 +10,29 @@ export default function ControlSection({ title, open: openProp, onToggle, defaul
   const isControlled = openProp !== undefined
   const open = isControlled ? openProp : internalOpen
   const handleToggle = isControlled ? onToggle : () => setInternalOpen((current) => !current)
+  const sectionRef = useRef(null)
+  const previousOpenRef = useRef(open)
+
+  // Opening a section near the bottom of the sidebar otherwise only grows the
+  // scrollbar: the content appears below the fold and nothing visible moves.
+  // On a closed-to-open transition, bring the section to the top of its
+  // scroll container so the revealed controls are what the eye lands on.
+  // Sections restored open on mount must not scroll (previousOpenRef seeds
+  // from the initial prop, so only a real toggle trips this).
+  useEffect(() => {
+    const wasOpen = previousOpenRef.current
+    previousOpenRef.current = open
+    if (open && !wasOpen) {
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      sectionRef.current?.scrollIntoView({
+        behavior: reducedMotion ? 'auto' : 'smooth',
+        block: 'start',
+      })
+    }
+  }, [open])
 
   return (
-    <section className="control-section">
+    <section className="control-section" ref={sectionRef}>
       <button type="button" className="section-header" aria-expanded={open} onClick={handleToggle}>
         <span className="section-title">{title}</span>
         {/* The chevron's open state is read straight off aria-expanded in CSS,

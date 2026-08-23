@@ -34,6 +34,13 @@
   color: var(--text-tertiary);
   text-align: center;
 
+  /* The sidebar column ends in its own credit strip beside this bar, so the
+     attribution centers on the visible area to its right, not on a full
+     width whose left edge the sidebar covers. */
+  @media (min-width: 992px) {
+    margin-left: var(--sidebar-width);
+  }
+
   & a {
     color: var(--text-secondary);
     text-decoration: underline;

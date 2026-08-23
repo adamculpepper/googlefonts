@@ -16,6 +16,9 @@
     font-weight: 600;
     letter-spacing: -0.005em;
     color: var(--text-primary);
+    /* One surface step above the sidebar, so the section spines read as
+       structure against the controls between them. */
+    background: var(--bg-elevated);
     transition: background var(--transition-fast);
   }
 
