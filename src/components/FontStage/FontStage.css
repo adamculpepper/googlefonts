@@ -11,11 +11,22 @@
   padding-bottom: var(--space-8);
 }
 
-/* Collections bar and results bar travel together at the top of the stage. */
+/* The results bar rides here, translucent over the grid scrolling beneath. */
 .font-stage__sticky {
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
+  background: color-mix(in srgb, var(--content-bg) 78%, transparent);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+}
+
+/* Without backdrop-filter the alpha alone would leave cards readable through
+   the bar, so those browsers get the opaque surface instead. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .font-stage__sticky {
+    background: var(--content-bg);
+  }
 }
 
 .font-stage__empty {

@@ -1,14 +1,29 @@
 .header {
   position: sticky;
   top: 0;
-  z-index: var(--z-sticky);
+  /* Above the stage's own sticky bar, not level with it. Sticky positioning
+     makes this element a stacking context, so at equal z-index the bar below
+     painted over the collections menu and swallowed its clicks. */
+  z-index: var(--z-menu);
   display: flex;
   align-items: center;
   gap: var(--space-3);
   height: var(--header-height);
   padding: 0 var(--space-4);
-  background: var(--bg-surface);
+  /* Translucent with a blur, so content passing underneath reads as depth
+     rather than as a hard edge. The solid fallback matters: without
+     backdrop-filter the same alpha would leave the grid legible through the
+     bar, which is worse than no effect at all. */
+  background: color-mix(in srgb, var(--bg-surface) 78%, transparent);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
   border-bottom: 1px solid var(--border-subtle);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .header {
+    background: var(--bg-surface);
+  }
 }
 
 .header__brand {

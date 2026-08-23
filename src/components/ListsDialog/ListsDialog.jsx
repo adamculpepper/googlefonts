@@ -19,7 +19,7 @@ function countLabel(count) {
 }
 
 export default function ListsDialog({ onClose }) {
-  const { favorites, lists, renameList, deleteList } = useCollections()
+  const { favorites, lists, createList, renameList, deleteList } = useCollections()
   const showToast = useToast()
   const panelRef = useRef(null)
   const renameInputRef = useRef(null)
@@ -27,6 +27,7 @@ export default function ListsDialog({ onClose }) {
   const [renamingId, setRenamingId] = useState(null)
   const [draft, setDraft] = useState('')
   const [confirmingId, setConfirmingId] = useState(null)
+  const [newName, setNewName] = useState('')
 
   useFocusTrap({ containerRef: panelRef, onClose })
 
@@ -57,6 +58,17 @@ export default function ListsDialog({ onClose }) {
     event.preventDefault()
     renameList(renamingId, draft)
     setRenamingId(null)
+  }
+
+  // A list can be started here as well as from a font's save menu, so somebody
+  // can set up their shortlists before they start picking.
+  function submitNewList(event) {
+    event.preventDefault()
+    const name = newName.trim()
+    if (!name) return
+    const id = createList(name)
+    setNewName('')
+    if (id) showToast(`Created ${name}`)
   }
 
   function confirmDelete(list) {
@@ -107,7 +119,8 @@ export default function ListsDialog({ onClose }) {
 
         {nothingSaved ? (
           <p className="lists-dialog__empty">
-            Star a font or save it to a list and it shows up here.
+            Star a font or save it to a list and it shows up here. You can also start a
+            list below.
           </p>
         ) : (
           <ul className="lists-dialog__rows">
@@ -200,6 +213,22 @@ export default function ListsDialog({ onClose }) {
             })}
           </ul>
         )}
+
+        <form className="lists-dialog__new" onSubmit={submitNewList}>
+          <input
+            type="text"
+            className="lists-dialog__new-input"
+            value={newName}
+            onChange={(event) => setNewName(event.target.value)}
+            placeholder="New list name"
+            aria-label="Name for a new list"
+            maxLength={60}
+          />
+          <button type="submit" className="lists-dialog__new-button" disabled={!newName.trim()}>
+            <Icon name="plus" size={12} />
+            Add list
+          </button>
+        </form>
       </div>
     </div>,
     document.body,

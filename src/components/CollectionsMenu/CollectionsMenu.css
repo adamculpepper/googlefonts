@@ -1,0 +1,132 @@
+.collections-menu {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.collections-menu__button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  height: var(--control-height);
+  padding: 0 var(--space-2-5, var(--space-2));
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast);
+
+  &:hover {
+    color: var(--text-primary);
+    border-color: var(--border-default);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  /* Filtering to a collection is a state the reader has to be able to see from
+     anywhere in the catalog, so the trigger itself carries it. */
+  &.is-active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+}
+
+.collections-menu__count {
+  min-width: 18px;
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-pill);
+  background: var(--bg-hover);
+  color: var(--text-tertiary);
+  font-size: var(--font-size-xs);
+  text-align: center;
+}
+
+.collections-menu__button.is-active .collections-menu__count {
+  background: rgba(255, 255, 255, 0.22);
+  color: var(--accent-ink);
+}
+
+.collections-menu__popover {
+  position: absolute;
+  top: calc(100% + var(--space-1-5));
+  right: 0;
+  z-index: var(--z-menu);
+  min-width: 220px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: var(--space-1);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}
+
+.collections-menu__item,
+.collections-menu__manage {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+}
+
+.collections-menu__item.is-active {
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+.collections-menu__item-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.collections-menu__item-count {
+  margin-left: auto;
+  color: var(--text-tertiary);
+  font-size: var(--font-size-xs);
+}
+
+.collections-menu__manage {
+  margin-top: var(--space-1);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border-subtle);
+  border-radius: 0;
+  color: var(--text-tertiary);
+  font-size: var(--font-size-xs);
+}
+
+/* The label yields first on narrow screens; the star and the count still say
+   what the button is. */
+@media (max-width: 767.98px) {
+  .collections-menu__label {
+    display: none;
+  }
+}

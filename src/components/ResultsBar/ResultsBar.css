@@ -7,7 +7,6 @@
   flex-wrap: wrap;
   gap: var(--space-2) var(--space-3);
   padding: var(--space-2) var(--space-4);
-  background: var(--content-bg);
   border-bottom: 1px solid var(--border-subtle);
 }
 
@@ -64,7 +63,7 @@
   }
 
   &:disabled {
-    color: var(--text-disabled);
+    color: var(--text-tertiary);
     border-color: var(--border-subtle);
     background: none;
     cursor: default;

@@ -2,6 +2,14 @@
 
 The number here, in `package.json`, and in `src/data/version.js` are the same number, and the bump lands in the same change as the work. A fix bumps the patch, a feature bumps the minor. Nothing enforces this automatically yet, so it is on whoever ships the change.
 
+## [1.4.0] - 2026-08-23
+
+- Favorites and saved lists now live in the header beside share and theme. The button names whichever collection is on screen and carries a count, so what is filtering the grid is readable from anywhere without opening anything.
+- The manage dialog can start a list. Before, a list could only be born from a font's save menu, so there was no way to set up shortlists before picking.
+- The header and the bar above the grid are slightly translucent with a blur behind them, so content passing underneath reads as depth instead of sliding under a hard edge. Browsers without backdrop blur get the solid bar rather than a see-through one.
+- Disabled Undo and Redo are muted rather than nearly invisible.
+- Fixed the collections menu opening behind the bar below it, which made its top entries unclickable.
+
 ## [1.3.0] - 2026-08-23
 
 - Favorites and saved lists moved out of a dropdown in the sidebar and onto a row above the grid. Every collection is one click away with its count in view, the active one is obvious, and starring a font updates the count as you go.

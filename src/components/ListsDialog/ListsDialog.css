@@ -174,3 +174,48 @@
     border-color: var(--color-error);
   }
 }
+
+/* Starting a list here means somebody can set up their shortlists before they
+   pick a single font, rather than only from a font's save menu. */
+.lists-dialog__new {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.lists-dialog__new-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.lists-dialog__new-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: var(--accent-hover);
+  }
+
+  &:disabled {
+    background: none;
+    border-color: var(--border-subtle);
+    color: var(--text-disabled);
+    cursor: default;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}

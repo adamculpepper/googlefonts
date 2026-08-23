@@ -10,6 +10,7 @@ import { VERSION } from '../../data/version.js'
 import { shareUrl } from '../../lib/stateCodec.js'
 import useCopyFlag from '../../hooks/useCopyFlag.js'
 import Icon from '../Icon.jsx'
+import CollectionsMenu from '../CollectionsMenu/CollectionsMenu.jsx'
 import './Header.css'
 
 function randomSeed() {
@@ -96,6 +97,7 @@ export default function Header({ onToggleSidebar, showSidebarButton }) {
         )}
       </div>
       <div className="header__tools">
+        <CollectionsMenu />
         <button
           type="button"
           className="header__button"

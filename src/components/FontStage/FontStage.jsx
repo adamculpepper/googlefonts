@@ -22,7 +22,6 @@ import {
 } from '../../lib/pinnedCodec.js'
 import { STORAGE_KEYS, readStoredString } from '../../lib/storage.js'
 import FontGrid from '../FontGrid/FontGrid.jsx'
-import CollectionsBar from '../CollectionsBar/CollectionsBar.jsx'
 import ResultsBar from '../ResultsBar/ResultsBar.jsx'
 import Pagination from '../Pagination/Pagination.jsx'
 import DetailPanel from '../DetailPanel/DetailPanel.jsx'
@@ -205,10 +204,9 @@ export default function FontStage({ records, probe }) {
         className={pins.length > 0 ? 'font-stage has-compare-tray' : 'font-stage'}
         ref={scrollRef}
       >
-        {/* One sticky stack: collections steer the view, the results bar
-            reports on it. Both stay in sight while the grid scrolls. */}
+        {/* Sticky so the count and the active filters stay in sight while
+            the grid scrolls beneath them. */}
         <div className="font-stage__sticky">
-          <CollectionsBar />
           <ResultsBar
             shownStart={shownStart}
             shownEnd={shownEnd}
