@@ -32,8 +32,10 @@
   align-items: center;
   justify-content: center;
   margin-top: auto;
+  /* Same height as the attribution footer beside it, so the two bottom bars
+     read as one strip. Vertical padding stays off; the height centers it. */
   min-height: var(--footer-height);
-  padding: var(--space-1-5) var(--space-4);
+  padding: 0 var(--space-4);
   font-size: var(--font-size-xs);
   color: var(--text-tertiary);
   background: var(--bg-surface);

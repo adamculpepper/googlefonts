@@ -61,10 +61,9 @@
   /* Both toolbars derive their height from the button they hold, so the
      sidebar's Controls bar and the results bar share one baseline. */
   --toolbar-height: calc(var(--control-height) + (var(--space-3) * 2) + 1px);
-  /* Both bottom bars derive their height from that button plus their own
-     padding and top border, so the sidebar credit and the paging footer stay
-     exactly level without either carrying a magic number. */
-  --footer-height: calc(var(--control-height) + (var(--space-1-5) * 2) + 1px);
+  /* Both bottom bars pin to this one value, so the sidebar credit and the
+     attribution footer stay exactly level instead of nearly so. */
+  --footer-height: 40px;
 
   /* Z-layers. The drawer sits above the sticky header it slides out from and
      below the toast, so a copy confirmation still reads while it is open. */
