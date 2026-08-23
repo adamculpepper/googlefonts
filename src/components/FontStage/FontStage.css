@@ -2,6 +2,9 @@
   flex: 1;
   min-width: 0;
   overflow-y: auto;
+  /* Reserve the scrollbar lane even when a filter leaves less than a page of
+     results, so the grid never shifts sideways as the bar comes and goes. */
+  scrollbar-gutter: stable;
   background: var(--content-bg);
   /* The grid rows are absolutely positioned; padding lives on the rows so the
      scrollbar hugs the edge. */

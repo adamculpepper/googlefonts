@@ -110,14 +110,22 @@ input[type='range']:disabled {
 }
 
 /* ---- Selects ---- */
+/* The native dropdown arrow hugs the right border and ignores padding, so the
+   chevron is ours: an inline SVG inset a real gap from the edge. The stroke is
+   a mid gray readable on both themes' elevated surface (a data URI cannot read
+   a custom property). */
 select {
   width: 100%;
-  padding: var(--space-1-5) var(--space-3);
-  background: var(--bg-elevated);
+  padding: var(--space-1-5) var(--space-6) var(--space-1-5) var(--space-3);
+  background: var(--bg-elevated)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%238a8aa0' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat right var(--space-2) center;
   border: 1px solid var(--border-default);
   border-radius: var(--radius-sm);
   font-size: var(--font-size-sm);
   cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
   transition: border-color var(--transition-fast);
 }
 select:hover:not(:disabled) {
