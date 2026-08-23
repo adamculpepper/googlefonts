@@ -2,6 +2,10 @@
 
 The number here, in `package.json`, and in `src/data/version.js` are the same number, and the bump lands in the same change as the work. A fix bumps the patch, a feature bumps the minor. Nothing enforces this automatically yet, so it is on whoever ships the change.
 
+## [1.7.1] - 2026-08-23
+
+- The category pills were two pixels shorter than the search box and Filters button beside them, so they sat a pixel low. Every control in that bar is one height now.
+
 ## [1.7.0] - 2026-08-23
 
 - The Filters button now sits directly beside the name search, where the eye goes next when a name has not narrowed things enough.

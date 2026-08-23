@@ -84,9 +84,11 @@
   scrollbar-width: thin;
 }
 
+/* Every control in this bar is 30px. The pills were 28 and sat a pixel low
+   against the search box beside them. */
 .filter-bar__pill {
   flex-shrink: 0;
-  height: 28px;
+  height: 30px;
   padding: 0 var(--space-3);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-pill);
