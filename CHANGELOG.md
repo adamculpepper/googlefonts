@@ -2,6 +2,28 @@
 
 The number here, in `package.json`, and in `src/data/version.js` are the same number, and the bump lands in the same change as the work. A fix bumps the patch, a feature bumps the minor. Nothing enforces this automatically yet, so it is on whoever ships the change.
 
+## [1.2.0] - 2026-08-23
+
+- A version number in the header, next to the app name, small and muted. The deploy pipeline stamps each release with its own build number, so the site reads v1.2.0.n and the n climbs on every deploy with no file to edit.
+- The preview box hints "Custom text" instead of assuming you are naming a brand, sits a little further from the app name, and takes less of the header.
+
+## [1.1.0] - 2026-08-22
+
+- Opening a sidebar section now scrolls it into view. Before, expanding a group near the bottom only made the scrollbar longer while the revealed controls stayed below the fold. Instant instead of smooth when the system asks for reduced motion.
+- Section headings sit on a slightly lighter surface, so the sidebar's structure reads at a glance.
+- The dropdown arrow keeps a real gap from the edge of the select instead of hugging its border.
+- The grid reserves its scrollbar lane, so results no longer shift sideways when a filter drops the count below one page. The sidebar deliberately does not, where the reserved lane read as dead space.
+- The "Not affiliated with Google" line centers on the visible area beside the sidebar instead of on a width the sidebar partly covers.
+
+## [1.0.1] - 2026-08-22
+
+- Undo, Redo, and Reset all are labeled buttons on desktop, icons on phones, and Reset all wears a distinct glyph so it can never be mistaken for Undo. The whole group is easier to see against the bar.
+- Hovering a Case segment names its case (As typed, UPPERCASE, lowercase, Title Case) instead of repeating one shared sentence four times, and screen readers get the same names.
+- Every header and results-bar button carries a tooltip.
+- The card action icons stay visible while the save-to-list menu is open instead of fading away underneath it.
+- The "Made by" strip and the attribution footer sit level as one bottom band.
+- Sharper social preview cards rendered from the real app, page metadata for link embeds, and a Limits section in the README.
+
 ## [1.0.0] - 2026-08-22
 
 First release.
