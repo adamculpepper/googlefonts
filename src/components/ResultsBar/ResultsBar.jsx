@@ -115,6 +115,7 @@ export default function ResultsBar({ shownStart, shownEnd, filteredCount, effect
           type="button"
           className="results-bar__action"
           aria-label="Undo"
+          title="Undo"
           disabled={!canUndo}
           onClick={undo}
         >
@@ -125,6 +126,7 @@ export default function ResultsBar({ shownStart, shownEnd, filteredCount, effect
           type="button"
           className="results-bar__action"
           aria-label="Redo"
+          title="Redo"
           disabled={!canRedo}
           onClick={redo}
         >
@@ -135,6 +137,7 @@ export default function ResultsBar({ shownStart, shownEnd, filteredCount, effect
           type="button"
           className="results-bar__action"
           aria-label="Reset all controls and filters"
+          title="Reset all controls and filters"
           onClick={reset}
         >
           <Icon name="reset" size={13} />

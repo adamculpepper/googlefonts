@@ -47,6 +47,7 @@ export default function Header({ onToggleSidebar, showSidebarButton }) {
           type="button"
           className="header__button"
           aria-label="Open filters"
+          title="Filters"
           onClick={onToggleSidebar}
         >
           <Icon name="filter" size={16} />
@@ -79,6 +80,7 @@ export default function Header({ onToggleSidebar, showSidebarButton }) {
             type="button"
             className="header__preview-clear"
             aria-label="Clear preview text"
+            title="Clear preview text"
             onClick={() => setParam('text', '')}
           >
             <Icon name="xmark" size={14} />
@@ -86,13 +88,20 @@ export default function Header({ onToggleSidebar, showSidebarButton }) {
         )}
       </div>
       <div className="header__tools">
-        <button type="button" className="header__button" aria-label="Shuffle the order" onClick={shuffle}>
+        <button
+          type="button"
+          className="header__button"
+          aria-label="Shuffle the order"
+          title="Shuffle the order"
+          onClick={shuffle}
+        >
           <Icon name="shuffle" size={16} />
         </button>
         <button
           type="button"
           className="header__button"
           aria-label={shareCopied ? 'Link copied' : 'Copy a link to this view'}
+          title={shareCopied ? 'Link copied' : 'Copy a link to this view'}
           onClick={copyShareLink}
         >
           <Icon name={shareCopied ? 'check' : 'share'} size={16} />
@@ -101,6 +110,7 @@ export default function Header({ onToggleSidebar, showSidebarButton }) {
           type="button"
           className="header__button"
           aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+          title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
           onClick={toggleTheme}
         >
           <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={16} />
