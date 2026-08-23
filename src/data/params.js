@@ -38,11 +38,13 @@ export const PARAM_REGISTRY = [
   {
     key: 'case', group: 'Preview', type: 'segmented', label: 'Case',
     default: 'as-typed',
+    // Per-option titles: the visual labels are glyphs, so hover and screen
+    // readers need the real case name per segment.
     options: [
-      { value: 'as-typed', label: 'Aa' },
-      { value: 'upper', label: 'AA' },
-      { value: 'lower', label: 'aa' },
-      { value: 'title', label: 'Aa Bb' },
+      { value: 'as-typed', label: 'Aa', title: 'As typed' },
+      { value: 'upper', label: 'AA', title: 'UPPERCASE' },
+      { value: 'lower', label: 'aa', title: 'lowercase' },
+      { value: 'title', label: 'Aa Bb', title: 'Title Case' },
     ],
     help: 'Applies to the preview only, not to what you copy later.',
   },
