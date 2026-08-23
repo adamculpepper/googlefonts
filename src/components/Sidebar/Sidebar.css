@@ -14,9 +14,6 @@
 .sidebar__sections {
   flex: 1;
   overflow-y: auto;
-  /* Reserve the scrollbar lane even when nothing scrolls, so collapsing the
-     last open section does not shift every control sideways. */
-  scrollbar-gutter: stable;
   padding-bottom: var(--space-4);
 }
 
