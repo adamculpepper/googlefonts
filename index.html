@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Fonts Browser - preview your text in every Google Font at once</title>
+    <meta
+      name="description"
+      content="Type your name or logo text and see it rendered in 1,900+ Google Fonts on one page. Filter by weight, measured thickness, and style, save favorites into lists, compare picks side by side, and copy the embed code."
+    />
+    <link rel="canonical" href="https://googlefonts.adamculpepper.net/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Google Fonts Browser" />
+    <meta property="og:url" content="https://googlefonts.adamculpepper.net/" />
+    <meta property="og:title" content="Google Fonts Browser - preview your text in every Google Font at once" />
+    <meta
+      property="og:description"
+      content="Type your name or logo text and see it rendered in 1,900+ Google Fonts on one page. Filter by weight, measured thickness, and style, save favorites into lists, compare picks side by side, and copy the embed code."
+    />
+    <!-- Absolute URL on purpose: link crawlers are not browsers and often
+         fail to resolve a relative og:image. The one exception to base './'. -->
+    <meta property="og:image" content="https://googlefonts.adamculpepper.net/social-preview.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="A grid of type specimen cards showing the same word drawn in many different Google Fonts." />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@adamculpepper" />
+    <meta name="twitter:creator" content="@adamculpepper" />
+    <meta name="twitter:title" content="Google Fonts Browser - preview your text in every Google Font at once" />
+    <meta
+      name="twitter:description"
+      content="Type your name or logo text and see it rendered in 1,900+ Google Fonts on one page. Filter by weight, measured thickness, and style, save favorites into lists, compare picks side by side, and copy the embed code."
+    />
+    <meta name="twitter:image" content="https://googlefonts.adamculpepper.net/social-preview.png" />
+    <meta name="twitter:image:alt" content="A grid of type specimen cards showing the same word drawn in many different Google Fonts." />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Google Fonts Browser",
+        "url": "https://googlefonts.adamculpepper.net/",
+        "description": "Type your name or logo text and see it rendered in 1,900+ Google Fonts on one page. Filter by weight, measured thickness, and style, save favorites into lists, compare picks side by side, and copy the embed code.",
+        "applicationCategory": "DesignApplication",
+        "applicationSubCategory": "Font browser",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "softwareVersion": "1.0.0",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Adam Culpepper",
+          "url": "https://adamculpepper.net"
+        }
+      }
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <!-- The font CSS and the font files come from two different Google hosts;
+         warming both connections early saves a round trip on the first specimen. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- The catalog (public/data/fonts.json) is fetched at runtime with a
+         cache-busting query the app derives from its build stamp; a static
+         preload here could never match that URL and would double-fetch. -->
+    <script src="./theme-boot.js"></script>
+    <script src="./analytics.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
