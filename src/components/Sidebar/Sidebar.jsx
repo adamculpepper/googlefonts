@@ -30,7 +30,7 @@ export default function Sidebar({ categoryCounts }) {
             (param) =>
               param.group === group &&
               !param.hidden &&
-              param.surface !== 'bar' &&
+              !param.surface &&
               (!param.showIf || param.showIf(settings)),
           )
           if (params.length === 0) return null

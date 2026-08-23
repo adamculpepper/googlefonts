@@ -15,10 +15,12 @@
 //          because keeping page 7 of a result set that no longer exists is
 //          incoherent.
 // showIf — removed from the sidebar entirely while the predicate is false.
-// surface — 'bar' moves a control out of the sidebar and into the filter bar
-//           above the grid. Finding a font starts with name, category and
-//           sort, so those three sit in the open rather than three clicks
-//           deep. Each control still has exactly one home.
+// surface — moves a control out of the sidebar and into the filter bar above
+//           the grid: 'bar' sits in the bar itself (name, category, sort),
+//           'bar-menu' inside the bar's filter dropdown. Finding a font is the
+//           point of the app, so everything that narrows the list stays in the
+//           open rather than three clicks deep, and each control still has
+//           exactly one home.
 //
 // Three filters default ON (hideNoto, latinOnly, supportsText). The results bar
 // MUST surface each as a removable chip; a default that silently hides hundreds
@@ -136,28 +138,28 @@ export const PARAM_REGISTRY = [
   },
   {
     key: 'variableOnly', group: 'Filters', type: 'toggle', label: 'Variable fonts only',
-    default: false, filter: true,
+    default: false, filter: true, surface: 'bar-menu',
     help: 'Fonts with an adjustable weight or width axis instead of fixed steps.',
   },
   {
     key: 'hasItalic', group: 'Filters', type: 'toggle', label: 'Has italic',
-    default: false, filter: true,
+    default: false, filter: true, surface: 'bar-menu',
   },
   {
     key: 'hideNoto', group: 'Filters', type: 'toggle', label: 'Hide Noto fonts',
-    default: true, filter: true,
+    default: true, filter: true, surface: 'bar-menu',
     help: 'The 212 Noto families exist to cover every writing system, not to be picked for a logo. Turn this off to see them.',
   },
 
   // ---- Language ----
   {
     key: 'latinOnly', group: 'Language', type: 'toggle', label: 'Latin-script fonts only',
-    default: true, filter: true,
+    default: true, filter: true, surface: 'bar-menu',
     help: 'Hides the 121 families that carry no Latin characters at all. A font built for another script still shows when it also ships Latin, which most do.',
   },
   {
     key: 'supportsText', group: 'Language', type: 'toggle', label: 'Must support my text',
-    default: true, filter: true,
+    default: true, filter: true, surface: 'bar-menu',
     help: 'Hides fonts missing characters you typed. Common characters are checked against the real character list of each font; rarer ones are allowed through rather than guessed at.',
   },
 

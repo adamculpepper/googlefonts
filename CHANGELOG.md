@@ -2,6 +2,12 @@
 
 The number here, in `package.json`, and in `src/data/version.js` are the same number, and the bump lands in the same change as the work. A fix bumps the patch, a feature bumps the minor. Nothing enforces this automatically yet, so it is on whoever ships the change.
 
+## [1.6.0] - 2026-08-23
+
+- The remaining filter switches moved into a dropdown behind a Filters button beside the search box, with a badge counting how many are narrowing the grid right now. Back to defaults resets them in a single undo step.
+- The sidebar is now only about how fonts are drawn and laid out. Everything that decides which fonts you see lives above the grid.
+- The badge counts the same filters the chips show, so it never claims a filter is working when it is not. Must support my text does nothing until there is text, and no longer counts until then.
+
 ## [1.5.0] - 2026-08-23
 
 - Fixed the biggest bug in the app so far: the Latin filter, which is on by default, was hiding 388 fonts that carry a full Latin character set, Poppins among them at rank 8. It read the script a family is filed under rather than asking whether the family has Latin at all, so a Latin and Devanagari face like Poppins counted as non-Latin. The default view goes from 1,226 fonts to 1,614, and searching Poppins now finds Poppins.
