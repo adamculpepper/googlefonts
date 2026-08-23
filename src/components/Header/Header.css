@@ -39,12 +39,25 @@
   font-weight: 600;
 }
 
-/* The input is the star of the header: it takes all spare width. */
+.header__version {
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+  color: var(--text-tertiary);
+}
+
 .header__preview {
   position: relative;
   flex: 1;
   min-width: 0;
-  max-width: 560px;
+  max-width: 400px;
+  /* Breathing room between the brand block and the input. */
+  margin-left: var(--space-8);
+}
+
+@media (max-width: 767.98px) {
+  .header__preview {
+    margin-left: 0;
+  }
 }
 
 .header__preview-input {
@@ -121,9 +134,10 @@
   }
 }
 
-/* Below md the brand name yields its space to the input. */
+/* Below md the brand name (and its version tag) yield their space to the input. */
 @media (max-width: 767.98px) {
-  .header__brand-name {
+  .header__brand-name,
+  .header__version {
     display: none;
   }
 }

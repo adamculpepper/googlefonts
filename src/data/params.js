@@ -31,7 +31,7 @@ export const PARAM_REGISTRY = [
     // hidden: the header renders this input itself (it is the control people
     // touch most, so it lives above the grid, not buried in the sidebar).
     key: 'text', group: 'Preview', type: 'text', label: 'Preview text',
-    default: '', maxLength: 60, placeholder: 'Type your brand name',
+    default: '', maxLength: 60, placeholder: 'Custom text',
     filter: true, hidden: true,
     help: 'Every font on the page draws this text. Leave it empty and each card shows its own font name instead.',
   },

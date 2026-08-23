@@ -30,7 +30,12 @@ jobs:
       - run: npm install
       # prebuild runs scripts/verify-data.mjs first (33 offline checks against
       # the committed catalog), so a bad fonts.json fails here, not in the browser.
+      # VITE_BUILD stamps this deploy's number into the page (shown beside the
+      # app name as v<version>.<build>); it increments per workflow run with no
+      # file to bump. Local builds have no number and show the bare version.
       - run: npm run build
+        env:
+          VITE_BUILD: ${{ github.run_number }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

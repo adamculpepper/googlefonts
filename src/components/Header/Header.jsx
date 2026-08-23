@@ -6,6 +6,7 @@
 
 import { useAppActions, useAppState } from '../../context/AppContext.jsx'
 import { PARAM_BY_KEY } from '../../data/params.js'
+import { VERSION } from '../../data/version.js'
 import { shareUrl } from '../../lib/stateCodec.js'
 import useCopyFlag from '../../hooks/useCopyFlag.js'
 import Icon from '../Icon.jsx'
@@ -56,6 +57,13 @@ export default function Header({ onToggleSidebar, showSidebarButton }) {
       <a className="header__brand" href="./">
         <span className="header__brand-mark" aria-hidden="true">Aa</span>
         <span className="header__brand-name">Google Fonts Browser</span>
+        {/* The build suffix is stamped by the deploy workflow (github.run_number),
+            so every deploy carries a fresh number with no file to bump; a local
+            build shows the bare version. */}
+        <span className="header__version">
+          v{VERSION}
+          {import.meta.env.VITE_BUILD ? `.${import.meta.env.VITE_BUILD}` : ''}
+        </span>
       </a>
       <div className="header__preview">
         <input
