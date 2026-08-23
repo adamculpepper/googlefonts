@@ -1,0 +1,28 @@
+.font-grid {
+  position: relative;
+  width: 100%;
+}
+
+.font-grid__row {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0 var(--space-4);
+  list-style: none;
+}
+
+/* Specimen ink independent of the app theme: judge type on white while the
+   app stays dark, or the reverse. The card background and ink flip together. */
+.font-grid[data-ink='dark-on-light'] .font-card {
+  background: #ffffff;
+  --specimen-ink: #16161a;
+}
+
+.font-grid[data-ink='light-on-dark'] .font-card {
+  background: #16161a;
+  --specimen-ink: #f5f2ea;
+}

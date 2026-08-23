@@ -1,0 +1,132 @@
+/* The save-to-list popover. Anchored, it is a fixed-position panel in a portal
+   and its coordinates arrive as custom properties from the component; inline,
+   it hangs off the bottom right of whatever relatively positioned parent
+   mounted it. --picker-width is kept in step with PANEL_WIDTH in the component,
+   which places the panel from that number instead of measuring it. */
+.list-picker {
+  --picker-width: 232px;
+
+  display: flex;
+  flex-direction: column;
+  width: var(--picker-width);
+  padding: var(--space-2);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+
+  &.is-anchored {
+    position: fixed;
+    left: var(--picker-left, 0);
+    top: var(--picker-y, 0);
+    max-height: var(--picker-max-height, 320px);
+    z-index: var(--z-menu);
+    /* Transparent until the first measurement lands, which happens before
+       paint. Opacity rather than visibility so the focus trap can still move
+       focus into the panel while it waits. */
+    opacity: 0;
+  }
+
+  &.is-anchored.is-placed {
+    opacity: 1;
+  }
+
+  /* Flipped above its anchor: --picker-y is the anchor's top edge, so the panel
+     grows upwards from there and its own height stays unmeasured. */
+  &.is-anchored.is-above {
+    top: auto;
+    bottom: calc(100vh - var(--picker-y, 0px));
+  }
+
+  &.is-inline {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    max-height: 320px;
+    margin-top: var(--space-1);
+    z-index: var(--z-menu);
+  }
+}
+
+.list-picker__title {
+  padding: var(--space-1) var(--space-1-5) var(--space-2);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+/* The rows are the only part that scrolls, so a long collection never pushes
+   the New list row out of reach. */
+.list-picker__rows {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+/* The whole row is the hit target, matching the sidebar's check rows. */
+.list-picker__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1-5);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+
+  &:hover {
+    background: var(--bg-hover);
+  }
+
+  &:active {
+    background: var(--bg-active);
+  }
+}
+
+.list-picker__row-icon {
+  flex-shrink: 0;
+  color: var(--accent-text);
+}
+
+/* A long list name truncates rather than wrapping: every row stays one line
+   tall, so the panel's height is a count of rows and nothing reflows as names
+   are typed. */
+.list-picker__row-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.list-picker__new,
+.list-picker__new-button {
+  flex-shrink: 0;
+  margin-top: var(--space-1);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.list-picker__new-button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding-right: var(--space-1-5);
+  padding-bottom: var(--space-1);
+  padding-left: var(--space-1-5);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--text-primary);
+  }
+}
+
+.list-picker__new-input {
+  width: 100%;
+  padding: var(--space-1-5) var(--space-2);
+}

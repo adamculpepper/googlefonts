@@ -1,0 +1,255 @@
+/* One specimen card. Uniform height per configuration: the specimen box is a
+   pure function of the font size (set inline as --specimen-box), which is what
+   lets the virtualizer treat every row as the same exact height and never
+   measure the DOM. Nothing about hover may change layout. */
+
+.font-card {
+  position: relative;
+  list-style: none;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color var(--transition-fast);
+
+  &:hover,
+  &:focus-within {
+    border-color: var(--border-default);
+
+    & .font-card__actions {
+      opacity: 1;
+    }
+  }
+}
+
+.font-card__open {
+  display: block;
+  width: 100%;
+  padding: var(--space-3);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+    border-radius: var(--radius-md);
+  }
+}
+
+/* data-ink on the grid container flips specimen ink independently of the app
+   theme, so type can be judged on white while the app stays dark. */
+.font-card__specimen {
+  height: var(--specimen-box);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  color: var(--specimen-ink, var(--text-primary));
+  /* Long lines clip with a fade rather than wrapping; wrapping would make row
+     heights text-dependent and bring DOM measurement back. */
+  mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+}
+
+.font-card__text {
+  line-height: 1.2;
+}
+
+.font-card__skeleton {
+  display: block;
+  width: 70%;
+  height: 55%;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+}
+
+.font-card[data-state='loading'] .font-card__skeleton {
+  animation: font-card-shimmer 1.2s ease-in-out infinite;
+}
+
+/* Regenerating: old text in the old font stays put; only a thin top edge
+   signals that a new generation is on the way. The grid must never blank. */
+.font-card[data-state='regenerating']::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent);
+  animation: font-card-sweep 1s ease-in-out infinite;
+}
+
+.font-card[data-state='unsupported'] .font-card__specimen,
+.font-card[data-state='error'] .font-card__specimen {
+  opacity: 0.45;
+}
+
+@keyframes font-card-shimmer {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes font-card-sweep {
+  0% {
+    transform: scaleX(0.15);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .font-card[data-state='loading'] .font-card__skeleton,
+  .font-card[data-state='regenerating']::before {
+    animation: none;
+  }
+}
+
+/* The name row stays in the UI font on purpose: scanning 48 display faces
+   only works if the one legible constant is the name. Each row is a single
+   non-wrapping line; the grid reserves exactly as many lines as the density
+   shows, so nothing is ever cut mid-glyph. */
+.font-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+  overflow: hidden;
+}
+
+.font-card__name-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  white-space: nowrap;
+  overflow: hidden;
+  min-height: 20px;
+}
+
+.font-card__name {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.font-card__badges {
+  display: flex;
+  gap: var(--space-1);
+  white-space: nowrap;
+  overflow: hidden;
+  min-height: 20px;
+}
+
+.font-card__badge {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+  padding: 1px var(--space-1-5);
+
+  &.font-card__badge--variable {
+    color: var(--accent-text);
+    background: var(--accent-bg);
+  }
+
+  &.font-card__badge--new {
+    color: var(--color-success);
+  }
+}
+
+.font-card__ink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+}
+
+.font-card__ink-bar {
+  width: 44px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-elevated);
+  overflow: hidden;
+}
+
+.font-card__ink-fill {
+  display: block;
+  height: 100%;
+  background: var(--text-tertiary);
+}
+
+.font-card__note {
+  margin-left: auto;
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.font-card[data-state='error'] .font-card__note {
+  color: var(--color-warning);
+}
+
+/* Hover-revealed at fine pointers, always visible on touch: hiding actions
+   behind hover on a phone means they do not exist. */
+.font-card__actions {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  display: flex;
+  gap: var(--space-1);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+@media (pointer: coarse) {
+  .font-card__actions {
+    opacity: 1;
+  }
+}
+
+.font-card__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+
+  &:hover {
+    color: var(--text-primary);
+    border-color: var(--border-default);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  &.is-active {
+    color: var(--accent-text);
+    border-color: var(--accent-dim);
+    background: var(--accent-bg);
+  }
+}

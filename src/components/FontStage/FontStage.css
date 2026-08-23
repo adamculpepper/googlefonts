@@ -1,0 +1,30 @@
+.font-stage {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  background: var(--content-bg);
+  /* The grid rows are absolutely positioned; padding lives on the rows so the
+     scrollbar hugs the edge. */
+  padding-bottom: var(--space-8);
+}
+
+.font-stage__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-10) var(--space-4);
+  text-align: center;
+}
+
+.font-stage__empty-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.font-stage__empty-hint {
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  max-width: 360px;
+}

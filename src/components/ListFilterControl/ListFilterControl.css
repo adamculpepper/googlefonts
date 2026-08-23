@@ -1,0 +1,18 @@
+/* Rides on the shared .control block so it lines up with every other knob in
+   the sidebar; only the Manage button beside the label is its own. */
+.list-filter__manage {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-0-5) var(--space-1);
+  margin: calc(var(--space-0-5) * -1) calc(var(--space-1) * -1);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  transition: color var(--transition-fast), background var(--transition-fast);
+
+  &:hover {
+    color: var(--text-primary);
+    background: var(--bg-hover);
+  }
+}

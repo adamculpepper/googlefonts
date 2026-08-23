@@ -1,0 +1,143 @@
+/* The compare tray. Fixed to the bottom edge, one fixed height, always the
+   same height: the chip list scrolls sideways instead of wrapping, because a
+   tray that grew a second line would cover the grid row the parent reserved
+   space for. */
+
+:root {
+  /* Published so whatever scrolls behind the tray can reserve exactly this
+     much room. It is set as the tray's own height as well, so the number the
+     parent pads by and the number the tray occupies cannot drift apart. */
+  --compare-tray-height: 56px;
+}
+
+/* The parent adds this class to its scroll container while any font is pinned.
+   The doubled selector buys specificity over the container's own padding rule
+   without an !important and without this file having to know the container's
+   class name. */
+.has-compare-tray.has-compare-tray {
+  padding-bottom: calc(var(--compare-tray-height) + var(--space-6));
+}
+
+.compare-tray {
+  position: fixed;
+  /* Aligned with the stage rather than spanning the window, so the sidebar and
+     its credit bar stay whole. */
+  left: var(--sidebar-width);
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-menu);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: var(--compare-tray-height);
+  padding: 0 var(--space-4);
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-default);
+  box-shadow: var(--shadow-md);
+}
+
+.compare-tray__count {
+  flex-shrink: 0;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.compare-tray__chips {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  gap: var(--space-1-5);
+  /* Scrolls rather than wraps: see the height note at the top of this file. */
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  list-style: none;
+  padding: var(--space-1) 0;
+  scrollbar-width: thin;
+}
+
+.compare-tray__chip {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: var(--space-1);
+  padding: 2px var(--space-1) 2px var(--space-2);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.compare-tray__chip-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  /* A long family name gives up space before the weight does: the weight is the
+     part that distinguishes two chips of the same family. */
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.compare-tray__chip-weight {
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.compare-tray__chip-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--text-primary);
+    background: var(--bg-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+  }
+}
+
+.compare-tray__actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--space-2);
+}
+
+/* Below the sidebar breakpoint the sidebar is an off-canvas drawer, so the tray
+   takes the full width. */
+@media (max-width: 991.98px) {
+  .compare-tray {
+    left: 0;
+  }
+}
+
+/* On a phone the three buttons and the chips cannot share one row honestly.
+   The count carries the number, the chips keep scrolling, and Copy embeds
+   drops to its icon. */
+@media (max-width: 599.98px) {
+  .compare-tray {
+    padding: 0 var(--space-2);
+    gap: var(--space-2);
+  }
+
+  .compare-tray__chip-name {
+    max-width: 96px;
+  }
+
+  .compare-tray__action-label {
+    /* The button keeps its aria-label, so nothing is lost for a screen reader. */
+    display: none;
+  }
+}

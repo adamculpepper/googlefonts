@@ -1,0 +1,469 @@
+/* The detail drawer. Fixed to the right edge under the header, over the grid
+   rather than beside it: the grid keeps its column count, so opening a font
+   never reflows the page behind it.
+
+   Every specimen surface here inherits --specimen-ink like the cards do, so
+   the previewInk setting still governs how type is judged while the panel is
+   open. */
+
+.detail-panel {
+  position: fixed;
+  top: var(--header-height);
+  right: 0;
+  bottom: 0;
+  width: 480px;
+  max-width: 100vw;
+  z-index: var(--z-drawer);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-surface);
+  border-left: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-lg);
+  animation: detail-panel-in var(--transition-med) ease-out;
+}
+
+@keyframes detail-panel-in {
+  from {
+    transform: translateX(16px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detail-panel {
+    animation: none;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .detail-panel {
+    width: 100vw;
+    border-left: none;
+  }
+}
+
+.detail-panel__close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+
+  &:hover {
+    color: var(--text-primary);
+    border-color: var(--border-default);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+}
+
+.detail-panel__content {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-4);
+}
+
+.detail-panel__header {
+  /* Clears the close button, which floats above this row. */
+  padding-right: 38px;
+}
+
+.detail-panel__title {
+  margin: 0;
+  font-size: var(--font-size-2xl);
+  font-weight: 650;
+  line-height: 1.2;
+  color: var(--text-primary);
+  /* Deliberately the UI font, not the family being previewed: the name is the
+     one thing on this panel that has to stay legible in every font. */
+}
+
+.detail-panel__subtitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  margin: var(--space-1) 0 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+}
+
+.detail-panel__error {
+  margin: var(--space-3) 0 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-warning);
+}
+
+.detail-panel a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--accent-text);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+}
+
+.detail-panel__section {
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.detail-panel__section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.detail-panel__section-title {
+  margin: 0 0 var(--space-3);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.detail-panel__section-head .detail-panel__section-title {
+  margin-bottom: var(--space-3);
+}
+
+/* ---- specimen ---------------------------------------------------------- */
+
+.detail-panel__specimen {
+  color: var(--specimen-ink, var(--text-primary));
+  overflow: hidden;
+}
+
+.detail-panel__specimen-text {
+  margin: 0;
+  line-height: 1.15;
+  /* Long brand names wrap here rather than clipping: unlike a card, this box
+     has no fixed height to protect. */
+  overflow-wrap: anywhere;
+}
+
+.detail-panel__size {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+
+  & input[type='range'] {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+.detail-panel__size-value,
+.detail-panel__axis-value {
+  min-width: 44px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- weight ladder ----------------------------------------------------- */
+
+.detail-panel__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: 26px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    color: var(--text-primary);
+    border-color: var(--border-default);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  &:disabled {
+    color: var(--text-disabled);
+    cursor: default;
+  }
+
+  &.is-active {
+    color: var(--accent-text);
+    border-color: var(--accent-dim);
+    background: var(--accent-bg);
+  }
+}
+
+.detail-panel__ladder,
+.detail-panel__waterfall {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.detail-panel__ladder-row {
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border-subtle);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.detail-panel__ladder-label,
+.detail-panel__waterfall-label,
+.detail-panel__charset-label {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+}
+
+.detail-panel__ladder-text {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: 26px;
+  line-height: 1.25;
+  color: var(--specimen-ink, var(--text-primary));
+  white-space: nowrap;
+  overflow: hidden;
+  /* Fades at the edge instead of wrapping, so every rung of the ladder stays
+     one line and the weights can be compared down the column. */
+  mask-image: linear-gradient(to right, black calc(100% - 28px), transparent);
+}
+
+/* ---- variable axes ----------------------------------------------------- */
+
+.detail-panel__axis {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+
+  & input[type='range'] {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+.detail-panel__axis-tag {
+  min-width: 42px;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+}
+
+/* ---- waterfall --------------------------------------------------------- */
+
+.detail-panel__waterfall-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-1-5) 0;
+  overflow: hidden;
+}
+
+.detail-panel__waterfall-label {
+  flex: 0 0 auto;
+  width: 26px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.detail-panel__waterfall-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  line-height: 1.2;
+  color: var(--specimen-ink, var(--text-primary));
+  white-space: nowrap;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, black calc(100% - 28px), transparent);
+}
+
+/* ---- character set ----------------------------------------------------- */
+
+.detail-panel__charset {
+  margin-top: var(--space-3);
+}
+
+.detail-panel__charset-text {
+  margin: var(--space-1) 0 0;
+  font-size: 22px;
+  line-height: 1.5;
+  color: var(--specimen-ink, var(--text-primary));
+  overflow-wrap: anywhere;
+}
+
+/* ---- facts ------------------------------------------------------------- */
+
+.detail-panel__facts {
+  margin: 0;
+}
+
+.detail-panel__fact {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-1-5) 0;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: var(--font-size-sm);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  & dt {
+    flex: 0 0 auto;
+    width: 140px;
+    color: var(--text-tertiary);
+  }
+
+  & dd {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0;
+    color: var(--text-primary);
+  }
+}
+
+.detail-panel__fact-note {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+}
+
+/* ---- embed blocks ------------------------------------------------------ */
+
+.detail-panel__embed {
+  margin-top: var(--space-4);
+}
+
+.detail-panel__embed-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-1);
+}
+
+.detail-panel__embed-label {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.detail-panel__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  height: 26px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--text-primary);
+    border-color: var(--border-default);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+}
+
+.detail-panel__code {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--bg-base);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  line-height: 1.6;
+  /* Snippets are copied, not read across: wrapping keeps the block from
+     growing a horizontal scrollbar inside a 480px drawer. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.detail-panel__caveat {
+  margin: var(--space-1) 0 0;
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
+  color: var(--text-tertiary);
+}
+
+.detail-panel__footnote {
+  margin: var(--space-6) 0 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+}
+
+/* ---- loading ----------------------------------------------------------- */
+
+.detail-panel__skeleton {
+  display: block;
+  width: 70%;
+  height: 24px;
+  margin-top: var(--space-1);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  animation: detail-panel-shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes detail-panel-shimmer {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detail-panel__skeleton {
+    animation: none;
+  }
+}

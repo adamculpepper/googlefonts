@@ -1,0 +1,73 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.app__body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.app__notice {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: var(--font-size-md);
+  padding: var(--space-8);
+  text-align: center;
+}
+
+.app__footer {
+  padding: var(--space-2) var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  text-align: center;
+
+  & a {
+    color: var(--text-secondary);
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--text-primary);
+    }
+  }
+}
+
+.app__scrim {
+  position: fixed;
+  inset: 0;
+  top: var(--header-height);
+  background: var(--scrim);
+  z-index: calc(var(--z-drawer) - 1);
+}
+
+/* The drawer transform lives on .sidebar (see Sidebar.css); this wrapper only
+   relays the open state down as a class the sidebar styles read. */
+.app__sidebar.is-drawer-open .sidebar {
+  transform: translateX(0);
+}
+
+@media (max-width: 991.98px) {
+  /* visibility (not just transform) so the closed drawer's controls leave the
+     tab order and the accessibility tree; the delayed transition keeps the
+     slide-out animation visible before the drawer actually hides. */
+  .app__sidebar .sidebar {
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition:
+      transform var(--transition-med),
+      visibility 0s var(--transition-med);
+  }
+
+  .app__sidebar.is-drawer-open .sidebar {
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform var(--transition-med);
+  }
+}

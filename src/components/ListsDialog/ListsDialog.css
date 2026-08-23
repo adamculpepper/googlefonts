@@ -1,0 +1,176 @@
+/* The manage-lists dialog. Portalled to the body, so it owns the scrim and
+   centres itself over the whole app rather than over one column of it. */
+.lists-dialog__scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background: var(--scrim);
+}
+
+.lists-dialog {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 420px;
+  /* Capped against the viewport rather than a fixed height: eight lists and
+     eighty lists get the same dialog, and only the row area scrolls. */
+  max-height: min(560px, calc(100vh - var(--space-10)));
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.lists-dialog__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.lists-dialog__title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.lists-dialog__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  transition: color var(--transition-fast), background var(--transition-fast);
+
+  &:hover {
+    color: var(--text-primary);
+    background: var(--bg-hover);
+  }
+}
+
+.lists-dialog__empty {
+  padding: var(--space-8) var(--space-6);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.lists-dialog__rows {
+  overflow-y: auto;
+  padding: var(--space-2);
+  list-style: none;
+}
+
+/* Every state of a row is the same height, so swapping to a rename field or to
+   the delete question never shifts the rows underneath it. */
+.lists-dialog__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+
+  &:hover {
+    background: var(--bg-hover);
+  }
+
+  &.is-confirming {
+    background: var(--accent-bg);
+  }
+}
+
+.lists-dialog__row-icon {
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+}
+
+.lists-dialog__row-name {
+  flex: 1 1 auto;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Counts hold their column while the numbers change. */
+.lists-dialog__row-count {
+  flex-shrink: 0;
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.lists-dialog__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-sm);
+  color: var(--text-tertiary);
+  transition: color var(--transition-fast), background var(--transition-fast);
+
+  &:hover {
+    color: var(--text-primary);
+    background: var(--bg-active);
+  }
+
+  &.is-danger:hover {
+    color: var(--color-error);
+  }
+}
+
+.lists-dialog__rename {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.lists-dialog__rename-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--space-1-5) var(--space-2);
+}
+
+.lists-dialog__confirm-question {
+  flex: 1 1 auto;
+  color: var(--text-primary);
+}
+
+.lists-dialog__confirm-button {
+  flex-shrink: 0;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-default);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+  transition: color var(--transition-fast), background var(--transition-fast),
+    border-color var(--transition-fast);
+
+  &:hover {
+    color: var(--text-primary);
+    background: var(--bg-hover);
+    border-color: var(--border-strong);
+  }
+
+  /* The destructive half is named plainly and coloured plainly. It is not the
+     default focus of the row, and it does not shout. */
+  &.is-yes:hover {
+    color: var(--color-error);
+    border-color: var(--color-error);
+  }
+}

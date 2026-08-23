@@ -1,0 +1,198 @@
+/* The compare overlay. Opaque and full screen rather than a floating panel on a
+   scrim: judging eight typefaces against each other means nothing else may be
+   in the frame competing for the eye. */
+
+.compare-view {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-base);
+}
+
+.compare-view__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-shrink: 0;
+  min-height: var(--toolbar-height);
+  padding: var(--space-2) var(--space-4);
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.compare-view__title {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.compare-view__size {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  /* Pushed to the right of the title, capped so a wide window does not stretch
+     one slider across half the screen. */
+  margin-left: auto;
+  flex: 1;
+  min-width: 140px;
+  max-width: 320px;
+}
+
+.compare-view__size-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.compare-view__size-value {
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  /* Fixed width so the slider does not shift under the thumb as the readout
+     goes from two digits to three. */
+  width: 44px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.compare-view__rows {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  list-style: none;
+}
+
+.compare-view__row {
+  padding: var(--space-3);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  transition:
+    opacity var(--transition-med),
+    border-color var(--transition-fast);
+
+  &[data-dimmed='true'] {
+    opacity: 0.26;
+  }
+
+  &[data-solo='true'] {
+    border-color: var(--accent-dim);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent-text);
+    outline-offset: 2px;
+  }
+}
+
+.compare-view__row-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+}
+
+.compare-view__row-name {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.compare-view__row-weight {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+  padding: 1px var(--space-1-5);
+}
+
+.compare-view__row-note {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+
+  &.is-warning {
+    color: var(--color-warning);
+  }
+}
+
+.compare-view__row-actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+
+.compare-view__solo {
+  min-height: 26px;
+  padding: 0 var(--space-2);
+  font-size: var(--font-size-xs);
+}
+
+.compare-view__specimen {
+  margin-top: var(--space-2);
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  color: var(--text-primary);
+  scrollbar-width: thin;
+}
+
+.compare-view__text {
+  line-height: 1.25;
+}
+
+.compare-view__skeleton {
+  display: block;
+  width: 60%;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  animation: compare-view-shimmer 1.2s ease-in-out infinite;
+}
+
+.compare-view__empty {
+  padding: var(--space-10) var(--space-4);
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+}
+
+@keyframes compare-view-shimmer {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .compare-view__skeleton {
+    animation: none;
+  }
+}
+
+/* Narrow windows: the title and the slider stop sharing a line, and the size
+   control takes the full width instead of being squeezed to a stub. */
+@media (max-width: 599.98px) {
+  .compare-view__bar {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .compare-view__size {
+    order: 3;
+    max-width: none;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .compare-view__rows {
+    padding: var(--space-2);
+  }
+}

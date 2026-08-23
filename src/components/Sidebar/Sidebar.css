@@ -1,0 +1,70 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  border-right: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  /* Sticky with its own scroll: the sidebar never rides the grid's scrollbar. */
+  position: sticky;
+  top: var(--header-height);
+  height: calc(100vh - var(--header-height));
+}
+
+.sidebar__sections {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: var(--space-4);
+}
+
+.sidebar__filter-note {
+  margin: var(--space-3) 0 var(--space-1);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.sidebar__credit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  min-height: var(--footer-height);
+  padding: var(--space-1-5) var(--space-4);
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+
+  & a {
+    color: var(--accent-text);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* Drawer mode below 992px: same component, slid over the grid with a scrim.
+   The App owns the open state and the scrim element. */
+@media (max-width: 991.98px) {
+  .sidebar {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    bottom: 0;
+    height: auto;
+    z-index: var(--z-drawer);
+    transform: translateX(-100%);
+    transition: transform var(--transition-med);
+    box-shadow: var(--shadow-lg);
+
+    &.is-open {
+      transform: translateX(0);
+    }
+  }
+}
