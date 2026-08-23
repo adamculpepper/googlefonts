@@ -98,6 +98,7 @@ export default function Header({ onToggleSidebar, showSidebarButton }) {
       </div>
       <div className="header__tools">
         <CollectionsMenu />
+        <span className="header__tools-divider" aria-hidden="true" />
         <button
           type="button"
           className="header__button"
